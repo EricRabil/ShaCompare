@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php
+        if (isset($model->page_title)) {
+            ?>
+            <title><?php echo $model->page_title; ?></title>
+            <?php
+        }
+        if(!$configuration->disable_css_autoload){
+            foreach ($this->config['resources']['css'] as $stylepack) {
+                echo '<link rel="stylesheet" href="' . $stylepack['url'] . '" integrity="' . $stylepack['sri'] . '" crossorigin="anonymous" />' . PHP_EOL;
+            }
+        }
+        foreach ($styles as $style) {
+            if (empty($style['url']) || empty($style['sri'])) {
+                continue;
+            }
+            echo '<link rel="stylesheet" href="' . $style['url'] . '" integrity="' . $style['sri'] . '" crossorigin="anonymous" />' . PHP_EOL;
+        }
+        ?>
+    </head>
+    <body style="min-height: 75rem;">
+        <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse mb-4">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/">ShaCompare</a>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <?php
+        require dirname(__FILE__) . '/' . $page;
+        echo PHP_EOL;
+        if(!$configuration->disable_js_autoload){
+            foreach ($this->config['resources']['js'] as $scriptpack) {
+                echo '<script type="text/javascript" src="' . $scriptpack['url'] . '" integrity="' . $scriptpack['sri'] . '" crossorigin="anonymous"></script>' . PHP_EOL;
+            }
+        }
+        foreach ($scripts as $script) {
+            if (empty($script['url']) || empty($script['sri'])) {
+                continue;
+            }
+            echo '<script type="text/javascript" src="' . $script['url'] . '" integrity="' . $script['sri'] . '" crossorigin="anonymous"></script>' . PHP_EOL;
+        }
+        if (isset($model)) {
+            if ($this->config['steel']['useLang']) {
+                ?>
+                <script src="/js/steel_localizer.js" type="text/javascript"></script>
+                <?php
+            }
+        }
+        ?>
+    </body>
+</html>

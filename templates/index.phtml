@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="col-lg-12">
+        <div class="card">
+  <div class="card-header">
+    ShaCompare
+  </div>
+  <div class="card-block">
+    <?php
+        if(empty($model->directory_one)){
+    ?>
+    <p class="card-text">Please make sure you've properly configured the directories, then refresh the page.</p>
+    <?php
+        }else{
+    ?>
+    <table class="table">
+  <thead>
+    <tr>
+      <th>File Name</th>
+      <th>Original Directory</th>
+      <th>Comparison Directory</th>
+    </tr>
+  </thead>
+  <tbody>
+      <?php
+      foreach($model->directory_one as $name => $sum){
+          ?>
+      <tr>
+      <th scope="row"><?php echo $name; ?></th>
+      <td><?php echo $sum; ?></td>
+      <td><?php echo $model->directory_two[$name]; ?></td>
+    </tr>
+      <?php
+      }
+      ?>
+  </tbody>
+</table>
+    <?php
+        }
+    ?>
+  </div>
+</div>
+    </div>
+</div>
